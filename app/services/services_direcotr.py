@@ -10,3 +10,26 @@ class DirectorService:
 
     def get_all(self):
         return self.director_dao.get_all()
+
+    def create(self, data):
+        return self.director_dao.create(data)
+
+    def update(self, data):
+        d_id = data.get('id')
+        director = self.get_one(d_id)
+
+        director.name = data.get("name")
+
+        self.director_dao.update(director)
+
+    def update_partial(self, data):
+        d_id = data.get('id')
+        director = self.get_one(d_id)
+
+        if 'name' in data:
+            director.name = data.get("name")
+
+        self.director_dao.update(director)
+
+    def delete(self, d_id):
+        self.director_dao.delete(d_id)

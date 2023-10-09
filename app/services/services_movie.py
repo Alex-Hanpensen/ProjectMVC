@@ -11,7 +11,7 @@ class MovieService:
     def get_all(self):
         return self.movie_dao.get_all()
 
-    def crete(self, data):
+    def create(self, data):
         return self.movie_dao.create(data)
 
     def update(self, data):
