@@ -4,6 +4,11 @@ from app.helpers.constants import JWT_SECRET, JWT_ALGORITHM
 
 
 def auth_required(func):
+    """
+    Checks registration
+    :param func:
+    :return: func
+    """
     def wrapper(*args, **kwargs):
         if 'Authorization' not in request.headers:
             abort(401)
@@ -20,6 +25,11 @@ def auth_required(func):
 
 
 def admin_required(func):
+    """
+       Checks registration and user privilege
+       :param func:
+       :return: func
+       """
     def wrapper(*args, **kwargs):
         if 'Authorization' not in request.headers:
             abort(401)

@@ -1,6 +1,7 @@
 from app.dao.model.director_model import Director
 
 
+#  CRUD
 class DirectorDAO:
     def __init__(self, session):
         self.session = session
@@ -25,4 +26,3 @@ class DirectorDAO:
         director = self.get_one(d_id)
         self.session.delete(director)
         self.session.commit()
-

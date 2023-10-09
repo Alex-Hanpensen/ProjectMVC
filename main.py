@@ -14,14 +14,24 @@ from app.views.movies import movie_ns
 from app.views.users import user_ns
 
 
-def create_app(config: Config):
+def create_app(config: Config) -> Flask:
+    """
+    creates an application
+    :param config:
+    :return: application
+    """
     application = Flask(__name__)
     application.config.from_object(config)
     application.app_context().push()
     return application
 
 
-def register_extensions(application: Flask):
+def register_extensions(application: Flask) -> None:
+    """
+    Creating an API and registering a database
+    :param application:
+    :return: api, database
+    """
     db.init_app(application)
     api = Api(application)
     api.add_namespace(movie_ns)
@@ -32,7 +42,13 @@ def register_extensions(application: Flask):
     create_data(application, db)
 
 
-def create_data(app, db):
+def create_data(app, db) -> None:
+    """
+    Registering entities and adding entities to the database
+    :param app: Flask
+    :param db: database
+    :return: None
+    """
     with app.app_context():
         db.create_all()
         u1 = User(username="vasya", password="my_little_pony", role="user")

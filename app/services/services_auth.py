@@ -11,6 +11,13 @@ class ServicesAuth:
         self.user_services = user_services
 
     def generate_token(self, username, password, is_refresh=False):
+        """
+        generates authorization tokens
+        :param username:
+        :param password:
+        :param is_refresh:
+        :return: {access_token,  refresh_token}
+        """
         user = self.user_services.get_username(username)
 
         if user is None:
@@ -38,6 +45,11 @@ class ServicesAuth:
         }
 
     def approve_refresh_token(self, refresh_token):
+        """
+        checks the refresh_token validation
+        :param refresh_token:
+        :return: generate_token()
+        """
         data = jwt.decode(jwt=refresh_token, key=JWT_SECRET, algorithms=[JWT_ALGORITHM])
         username = data.get('username')
         return self.generate_token(username, None, is_refresh=True)

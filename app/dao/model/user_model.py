@@ -3,6 +3,9 @@ from app.setup_db import db
 
 
 class User(db.Model):
+    """
+    creating a model
+    """
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
@@ -11,6 +14,9 @@ class User(db.Model):
 
 
 class UserSchema(Schema):
+    """
+    Data Serialization
+    """
     id = fields.Int(dump_only=True)
     username = fields.Str()
     password = fields.Str()

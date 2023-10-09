@@ -35,6 +35,11 @@ class UserDAO:
         self.session.commit()
 
     def generator_password(self, password):
+        """
+        hashing the password
+        :param password:
+        :return: hash_password
+        """
         return base64.b64encode(hashlib.pbkdf2_hmac(
             'SHA256',
             password.encode('utf-8'),
@@ -43,6 +48,12 @@ class UserDAO:
         ))
 
     def compare_password(self, password_hash, other_password):
+        """
+        checks the original password and password hash
+        :param password_hash:
+        :param other_password:
+        :return: bool
+        """
         hash_password = hashlib.pbkdf2_hmac(
             'SHA256',
             other_password.encode('utf-8'),
