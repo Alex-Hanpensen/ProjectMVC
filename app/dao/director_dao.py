@@ -26,3 +26,5 @@ class DirectorDAO:
         director = self.get_one(d_id)
         self.session.delete(director)
         self.session.commit()
+
+

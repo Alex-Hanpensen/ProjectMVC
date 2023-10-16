@@ -3,7 +3,7 @@ from app.dao.genre_dao import GenreDAO
 from app.dao.movie_dao import MovieDAO
 from app.dao.user_dao import UserDAO
 
-from app.services.services_direcotr import DirectorService
+from app.services.services_director import DirectorService
 from app.services.services_genre import GenreService
 from app.services.services_movie import MovieService
 from app.services.services_user import UserService
