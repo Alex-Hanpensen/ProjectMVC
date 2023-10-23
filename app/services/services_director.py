@@ -8,6 +8,9 @@ class DirectorService:
     def get_one(self, d_id):
         return self.director_dao.get_one(d_id)
 
+    def get_page(self, page):
+        return self.director_dao.get_page(page)
+
     def get_all(self):
         return self.director_dao.get_all()
 

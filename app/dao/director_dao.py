@@ -9,6 +9,9 @@ class DirectorDAO:
     def get_one(self, d_id):
         return self.session.query(Director).get(d_id)
 
+    def get_page(self, page):
+        return Director.query.paginate(page=page, per_page=12)
+
     def get_all(self):
         return self.session.query(Director).all()
 
@@ -26,5 +29,3 @@ class DirectorDAO:
         director = self.get_one(d_id)
         self.session.delete(director)
         self.session.commit()
-
-

@@ -10,15 +10,15 @@ class ServicesAuth:
     def __init__(self, user_services: UserService):
         self.user_services = user_services
 
-    def generate_token(self, username, password, is_refresh=False):
+    def generate_token(self, email, password, is_refresh=False):
         """
         generates authorization tokens
-        :param username:
+        :param email:
         :param password:
         :param is_refresh:
         :return: {access_token,  refresh_token}
         """
-        user = self.user_services.get_username(username)
+        user = self.user_services.get_email(email)
 
         if user is None:
             raise abort(404)
@@ -28,8 +28,8 @@ class ServicesAuth:
                 abort(400)
 
         data = {
-            'username': user.username,
-            'role': user.role
+            "email": str(user.email),
+            "password": str(user.password)
         }
 
         min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
@@ -51,5 +51,5 @@ class ServicesAuth:
         :return: generate_token()
         """
         data = jwt.decode(jwt=refresh_token, key=JWT_SECRET, algorithms=[JWT_ALGORITHM])
-        username = data.get('username')
-        return self.generate_token(username, None, is_refresh=True)
+        email = data.get('email')
+        return self.generate_token(email, None, is_refresh=True)

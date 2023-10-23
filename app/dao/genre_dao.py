@@ -9,6 +9,9 @@ class GenreDAO:
     def get_one(self, g_id):
         return self.session.query(Genre).get(g_id)
 
+    def get_page(self, page):
+        return Genre.query.paginate(page=page, per_page=12)
+
     def get_all(self):
         return self.session.query(Genre).all()
 

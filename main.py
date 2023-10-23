@@ -51,9 +51,6 @@ def create_data(app, db) -> None:
     """
     with app.app_context():
         db.create_all()
-        u1 = User(username="vasya", password="my_little_pony", role="user")
-        u2 = User(username="oleg", password="qwerty", role="user")
-        u3 = User(username="oleg", password="P@ssw0rd", role="admin")
 
         with db.session.begin():
             for movie in movies_data:
@@ -66,7 +63,6 @@ def create_data(app, db) -> None:
                 result = Genre(**genre)
                 db.session.add(result)
 
-            db.session.add_all([u1, u2, u3])
             db.session.commit()
 
 

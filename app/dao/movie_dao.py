@@ -1,10 +1,18 @@
 from app.dao.model.movie_model import Movie
 
+from sqlalchemy import desc
+
 
 #  CRUD
 class MovieDAO:
     def __init__(self, session):
         self.session = session
+
+    def get_page(self, page):
+        return Movie.query.paginate(page=page, per_page=12)
+
+    def get_new_movies(self):
+        return self.session.query(Movie).order_by(desc(Movie.year)).all()
 
     def get_one(self, m_id):
         return self.session.query(Movie).get(m_id)

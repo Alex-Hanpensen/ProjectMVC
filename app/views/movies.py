@@ -11,9 +11,17 @@ movies_schema = MovieSchema(many=True)
 
 @movie_ns.route('/')
 class MoviesView(Resource):
-    @auth_required
+
     def get(self):
-        all_movies = movie_service.get_all()
+        page = request.args.get('page', None, type=int)
+        status = request.args.get('status', None, type=str)
+        if status == 'new':
+            all_movies = movie_service.get_new_movies()
+        elif page:
+            all_movies = movie_service.get_page(page)
+        else:
+            all_movies = movie_service.get_all()
+
         return movies_schema.dump(all_movies), 200
 
     @admin_required
@@ -41,7 +49,7 @@ class MovieView(Resource):
         movie_service.update(req_json)
         return "", 204
 
-    def path(self, u_id):
+    def patch(self, u_id):
         req_json = request.json
         req_json['id'] = u_id
 

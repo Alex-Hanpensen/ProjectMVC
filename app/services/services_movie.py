@@ -8,6 +8,12 @@ class MovieService:
     def get_one(self, m_id):
         return self.movie_dao.get_one(m_id)
 
+    def get_new_movies(self):
+        return self.movie_dao.get_new_movies()
+
+    def get_page(self, page):
+        return self.movie_dao.get_page(page)
+
     def get_all(self):
         return self.movie_dao.get_all()
 

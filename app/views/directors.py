@@ -11,9 +11,13 @@ directors_schema = DirectorsSchema(many=True)
 
 @director_ns.route('/')
 class DirectorsView(Resource):
-    @auth_required
+
     def get(self):
-        all_directors = director_service.get_all()
+        page = request.args.get('page', None, type=int)
+        if page:
+            all_directors = director_service.get_page(page)
+        else:
+            all_directors = director_service.get_all()
         return directors_schema.dump(all_directors), 200
 
     @admin_required
@@ -41,7 +45,7 @@ class DirectorView(Resource):
         director_service.update(req_json)
         return "", 204
 
-    def path(self, d_id):
+    def patch(self, d_id):
         req_json = request.json
         req_json['id'] = d_id
 

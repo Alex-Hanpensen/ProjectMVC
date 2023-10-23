@@ -2,7 +2,7 @@ from flask_restx import Resource, Namespace
 from flask import request
 from app.container import user_service
 from app.dao.model.user_model import UserSchema
-from app.helpers.decortors import admin_required
+from app.helpers.decortors import admin_required, auth_required
 
 user_ns = Namespace('users')
 user_schema = UserSchema()
@@ -10,7 +10,7 @@ users_schema = UserSchema(many=True)
 
 
 @user_ns.route('/')
-class MoviesView(Resource):
+class UsersView(Resource):
     def get(self):
         all_users = user_service.get_all()
         return users_schema.dump(all_users), 200
@@ -22,7 +22,7 @@ class MoviesView(Resource):
 
 
 @user_ns.route('/<int:u_id>')
-class MovieView(Resource):
+class UserView(Resource):
     def get(self, u_id):
         try:
             user = user_service.get_one(u_id)
@@ -30,14 +30,16 @@ class MovieView(Resource):
         except Exception as e:
             return "", 404
 
-    def put(self, u_id):
+    @auth_required
+    def patch(self, u_id):
         req_json = request.json
         req_json['id'] = u_id
 
         user_service.update(req_json)
         return "", 204
 
-    def path(self, u_id):
+    @auth_required
+    def put(self, u_id):
         req_json = request.json
         req_json['id'] = u_id
 

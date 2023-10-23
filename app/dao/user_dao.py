@@ -13,8 +13,11 @@ class UserDAO:
     def get_one(self, u_id):
         return self.session.query(User).get(u_id)
 
-    def get_username(self, username):
-        return self.session.query(User).filter(User.username == username).first()
+    def get_username(self, name):
+        return self.session.query(User).filter(User.name == name).first()
+
+    def get_email(self, email):
+        return self.session.query(User).filter(User.email == email).first()
 
     def get_all(self):
         return self.session.query(User).all()

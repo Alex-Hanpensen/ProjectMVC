@@ -5,18 +5,18 @@ from app.container import auth_service
 auth_ns = Namespace('auth')
 
 
-@auth_ns.route('/')
+@auth_ns.route('/login')
 class AuthsView(Resource):
     def post(self):
         data = request.json
 
-        username = data.get('username', None)
+        email = data.get('email', None)
         password = data.get('password', None)
 
-        if None in (username, password):
+        if None in (email, password):
             return '', 400
 
-        tokens = auth_service.generate_token(username, password)
+        tokens = auth_service.generate_token(email, password)
 
         return tokens, 201
 
@@ -27,3 +27,10 @@ class AuthsView(Resource):
         tokens = auth_service.approve_refresh_token(refresh_token)
 
         return tokens, 201
+
+
+@auth_ns.route('/register/')
+class AuthView(Resource):
+    def post(self):
+        data = request.json
+        auth_service.user_services.create(data)

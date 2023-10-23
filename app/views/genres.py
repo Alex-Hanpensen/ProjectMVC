@@ -11,9 +11,13 @@ genres_schema = GenreSchema(many=True)
 
 @genre_ns.route('/')
 class GenresView(Resource):
-    @auth_required
+
     def get(self):
-        all_genrs = genre_service.get_all()
+        page = request.args.get('page', None, type=int)
+        if page:
+            all_genrs = genre_service.get_page(page)
+        else:
+            all_genrs = genre_service.get_all()
         return genres_schema.dump(all_genrs), 200
 
     @admin_required
@@ -41,7 +45,7 @@ class GenreView(Resource):
         genre_service.update(req_json)
         return "", 204
 
-    def path(self, g_id):
+    def patch(self, g_id):
         req_json = request.json
         req_json['id'] = g_id
 
